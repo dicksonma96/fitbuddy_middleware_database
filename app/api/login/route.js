@@ -16,8 +16,17 @@ export async function POST(req) {
     }
     delete result.rows[0].password;
 
+    let user_detail = {};
+    const detail =
+      await sql`select * from user_details where user_id = ${result.rows[0].id} `;
+
+    if (detail.rows.length) {
+      user_detail = detail.rows[0];
+    }
+
     let resInfo = {
       ...result.rows[0],
+      detail: user_detail,
     };
 
     return NextResponse.json(

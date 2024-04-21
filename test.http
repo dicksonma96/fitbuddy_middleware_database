@@ -2,11 +2,64 @@ POST http://localhost:3000/api/register HTTP/1.1
 content-type: application/json
 
 {
-    "username": "dicksonma97",
-    "email": "dicksonma97@gmail.com",
+    "username": "dicksonma98",
+    "email": "dicksonma98@gmail.com",
     "password": "123456"
+}
+
+###
+
+POST http://localhost:3000/api/login 
+content-type: application/json
+
+{
+    "username": "dicksonma96",
+    "password": "123456"
+}
+
+###
+
+POST http://localhost:3000/api/getUserDetail 
+content-type: application/json
+
+{
+    "id": "12345"
 }
 
 ###
 GET http://localhost:3000/api/hello 
 content-type: application/json
+
+
+###
+
+POST https://fitbuddy-middleware-database.vercel.app/api/register HTTP/1.1
+content-type: application/json
+
+{
+    "username": "dicksonma97",
+    "email": "dicksonma97@gmail.com",
+    "password": "123456"
+}
+
+
+###
+
+POST http://localhost:3000/api/userUpdate HTTP/1.1
+content-type: application/json
+
+{
+   "user_id":"1234",
+   "gender": "m",
+   "height" : 170,
+   "weight" : 70,
+   "target_weight" :75,
+   "exercise_freq" : 0,
+   "plank_last" : 0,
+   "home_equip" : false
+}
+
+##
+
+INSERT INTO users (id) VALUES ('1');
+INSERT INTO user_details (user_id) VALUES ('1')
