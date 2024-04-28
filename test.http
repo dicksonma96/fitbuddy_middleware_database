@@ -129,6 +129,21 @@ content-type: application/json
 
 ###
 
+GET http://localhost:3000/api/userComplete?user_id=123 HTTP/1.1
+content-type: application/json
+
+###
+
+POST http://localhost:3000/api/markComplete HTTP/1.1
+content-type: application/json
+
+{
+    "user_id":1,
+    "tutorial_id":2
+}
+
+###
+
 INSERT INTO exercise (tutorial_id, name, reps, description) 
 VALUES 
 (1,
@@ -142,3 +157,6 @@ VALUES
 'Slender Legs',
 10,
 true,true)
+
+
+select user_complete.*, tutorial.name from user_complete LEFT JOIN tutorial ON user_complete.tutorial_id = tutorial.id where user_id = '123'
