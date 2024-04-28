@@ -329,11 +329,11 @@ function AddExercise({ tutorial_id, setAddOpen, tutorial_name, refresh }) {
           </div>
           <div className="input">
             <div className="label">Reps:</div>
-            <input type="number" name="reps" min="0" />
+            <input type="number" name="reps" min="0" required />
           </div>
           <div className="input">
             <div className="label">Duration:</div>
-            <input type="number" name="duration" min="0" />
+            <input type="number" name="duration" min="0" required />
             <em>(minutes)</em>
           </div>
           <div className="input" style={{ gridColumn: "1 / 4" }}>
