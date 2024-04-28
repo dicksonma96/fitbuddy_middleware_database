@@ -50,6 +50,7 @@ content-type: application/json
 
 {
    "user_id":"1234",
+   "age":20,
    "gender": "m",
    "height" : 170,
    "weight" : 70,
@@ -59,7 +60,85 @@ content-type: application/json
    "home_equip" : false
 }
 
-##
+###
 
-INSERT INTO users (id) VALUES ('1');
-INSERT INTO user_details (user_id) VALUES ('1')
+GET http://localhost:3000/api/getTutorials HTTP/1.1
+content-type: application/json
+
+
+###
+
+GET http://localhost:3000/api/getFeaturedTutorials HTTP/1.1
+content-type: application/json
+
+###
+
+GET http://localhost:3000/api/getTutorialDetail?tutorial_id=1 HTTP/1.1
+content-type: application/json
+
+###
+
+POST http://localhost:3000/api/updateTutorial HTTP/1.1
+content-type: application/json
+
+{
+   "id":1,
+   "name":"Body Sculpting 2",
+   "img_url": "https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+   "time" : 10,
+   "featured" : true,
+   "premium" : true,
+   "description":"Desc",
+   "exercise" : [{
+    "id":1,
+    "name":"Push-ups",
+    "description":"Start in a plank position with your hands slightly wider than shoulder-width apart. Lower your body until your chest nearly touches the floor, then push yourself back up to the starting position.",
+    "reps":10,
+    "tutorial_id":1
+   }]
+}
+
+###
+
+
+POST http://localhost:3000/api/addTutorial HTTP/1.1
+content-type: application/json
+
+{
+   "name":"Body Sculpting 3",
+   "img_url": "https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+   "time" : 10,
+   "featured" : true,
+   "premium" : true,
+   "description":"Desc3"
+}
+
+###
+
+
+POST http://localhost:3000/api/addExercise HTTP/1.1
+content-type: application/json
+
+{
+   "name":"Push-ups 2",
+   "description":"Desc3",
+   "reps":10,
+   "duration":0,
+   "tutorial_id":1
+}
+
+###
+
+INSERT INTO exercise (tutorial_id, name, reps, description) 
+VALUES 
+(1,
+'Squats',
+20,
+'')
+
+INSERT INTO tutorial (img_url, name, time, featured, premium) 
+VALUES 
+('https://images.pexels.com/photos/28076/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+'Slender Legs',
+10,
+true,true)

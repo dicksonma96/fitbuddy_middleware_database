@@ -11,6 +11,7 @@ export async function POST(req) {
 
     const result = await sql`INSERT INTO user_details 
     (user_id,
+      age,
         gender,
         height,
         weight,
@@ -20,6 +21,7 @@ export async function POST(req) {
         home_equip)
     VALUES (
       ${request.user_id},
+      ${request.age},
       ${request.gender},
       ${request.height},
       ${request.weight},
@@ -30,6 +32,7 @@ export async function POST(req) {
     )
     ON CONFLICT (user_id)
     DO UPDATE SET 
+    age= ${request.age},
     gender= ${request.gender},
     height = ${request.height},
     weight = ${request.weight},

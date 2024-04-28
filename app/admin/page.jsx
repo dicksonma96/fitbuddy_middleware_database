@@ -2,12 +2,15 @@ import React from "react";
 import "./style.scss";
 import { sql } from "@vercel/postgres";
 import UserRow from "./UserRow";
+import TutorialRow from "./TutorialRow";
 import { unstable_noStore as noStore } from "next/cache";
 import AddUserForm from "./AddUserForm";
+import AddTutorialForm from "./AddTutorialForm";
 import ProtectedLayout from "./ProtectedLayout";
 
 async function Admin() {
   const userlist = await Userlist();
+  const tutorialList = await TutorialList();
 
   const AdminLogin = async (username, password) => {
     "use server";
@@ -24,7 +27,7 @@ async function Admin() {
 
   const UpdateUser = async (updateInfo) => {
     "use server";
-    let res = await fetch(`${process.env.DOMAIN_URL}/userUpdate`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/userUpdate`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +54,7 @@ async function Admin() {
       email: formData.get("email"),
       password: formData.get("password"),
     };
-    let res = await fetch(`${process.env.DOMAIN_URL}/register`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/register`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
@@ -102,6 +105,29 @@ async function Admin() {
           <br />
           <AddUserForm AddUser={AddUser} />
         </div>
+        <br />
+        <div className="usertable">
+          <h3>Tutorials</h3>
+          <br />
+          <table>
+            <thead>
+              <tr>
+                <th>Tutorial ID</th>
+                <th>Name</th>
+                <th>Time</th>
+                <th>Featured</th>
+                <th>Premium</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tutorialList.data.map((info, index) => (
+                <TutorialRow key={index} info={info} />
+              ))}
+            </tbody>
+          </table>
+          <AddTutorialForm />
+        </div>
       </main>
     </ProtectedLayout>
   );
@@ -109,11 +135,29 @@ async function Admin() {
 
 async function Userlist() {
   noStore();
-
   try {
     const res =
       await sql`select ud.*, u.username, u.id, u.status FROM user_details ud RIGHT JOIN users u ON ud.user_id = u.id`;
     return res.rows;
+  } catch (error) {
+    return error;
+  }
+}
+
+async function TutorialList() {
+  noStore();
+  try {
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/getTutorials`,
+      {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const resJson = await res.json();
+    return resJson;
   } catch (error) {
     return error;
   }
