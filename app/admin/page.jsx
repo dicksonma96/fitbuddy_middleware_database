@@ -65,6 +65,12 @@ async function Admin() {
     return { ...resJson, status: res.status };
   };
 
+  const DeleteTutorial = async (id) => {
+    "use server";
+    const res = await sql`DELETE from tutorial WHERE id = ${id}`;
+    return res;
+  };
+
   return (
     <ProtectedLayout AdminLogin={AdminLogin}>
       <main className="admin">
@@ -122,7 +128,11 @@ async function Admin() {
             </thead>
             <tbody>
               {tutorialList.data.map((info, index) => (
-                <TutorialRow key={index} info={info} />
+                <TutorialRow
+                  key={index}
+                  info={info}
+                  DeleteTutorial={DeleteTutorial}
+                />
               ))}
             </tbody>
           </table>

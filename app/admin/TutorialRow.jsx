@@ -2,24 +2,55 @@
 
 import React, { useEffect, useState } from "react";
 
-function TutorialRow({ info }) {
+function TutorialRow({ info, DeleteTutorial }) {
   const [editOpen, setEditOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await DeleteTutorial(info.id);
+      alert("Successfully Deleted");
+      window.location.reload();
+    } catch (e) {
+      alert("Delete failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deletePrompt = () => {
+    let ans = prompt("Please type 'DELETE' to complete the deletion");
+    if (ans == "DELETE") {
+      handleDelete();
+    } else {
+      alert("Delete Failed");
+    }
+  };
 
   return (
     <>
-      <tr>
-        <td>{info.id}</td>
-        <td>{info.name}</td>
-        <td>{info.time}</td>
-        <td>{info.featured ? "Yes" : "No"}</td>
-        <td>{info.premium ? "Yes" : "No"}</td>
-        <td>
-          <button className="action_btn" onClick={() => setEditOpen(true)}>
-            Edit
-          </button>
-          <button className="action_btn delete_btn">Delete</button>
-        </td>
-      </tr>
+      {loading ? (
+        <tr>
+          <td colSpan={"100%"}>Deleting...</td>
+        </tr>
+      ) : (
+        <tr>
+          <td>{info.id}</td>
+          <td>{info.name}</td>
+          <td>{info.time}</td>
+          <td>{info.featured ? "Yes" : "No"}</td>
+          <td>{info.premium ? "Yes" : "No"}</td>
+          <td>
+            <button className="action_btn" onClick={() => setEditOpen(true)}>
+              Edit
+            </button>
+            <button className="action_btn delete_btn" onClick={deletePrompt}>
+              Delete
+            </button>
+          </td>
+        </tr>
+      )}
+
       {editOpen && <TutorialDetail id={info.id} setEditOpen={setEditOpen} />}
     </>
   );
@@ -298,11 +329,11 @@ function AddExercise({ tutorial_id, setAddOpen, tutorial_name, refresh }) {
           </div>
           <div className="input">
             <div className="label">Reps:</div>
-            <input type="number" name="reps" min="0" value="0" />
+            <input type="number" name="reps" min="0" />
           </div>
           <div className="input">
             <div className="label">Duration:</div>
-            <input type="number" name="duration" min="0" value="0" />
+            <input type="number" name="duration" min="0" />
             <em>(minutes)</em>
           </div>
           <div className="input" style={{ gridColumn: "1 / 4" }}>
