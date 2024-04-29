@@ -153,13 +153,13 @@ POST http://localhost:3000/api/createPlan HTTP/1.1
 content-type: application/json
 
 {
-    "user_id":123,
-    "name":"My Plan 2"
+    "user_id":345,
+    "name":"345's plan"
 }
 
 ###
 
-GET http://localhost:3000/api/getPlan?user_id=123 HTTP/1.1
+GET http://localhost:3000/api/getPlan?user_id=234 HTTP/1.1
 content-type: application/json
 
 ###
@@ -177,7 +177,7 @@ content-type: application/json
 ###
 
 
-DELETE http://localhost:3000/api/deletePlan?id=1 HTTP/1.1
+DELETE http://localhost:3000/api/deletePlan?id=5 HTTP/1.1
 content-type: application/json
 
 

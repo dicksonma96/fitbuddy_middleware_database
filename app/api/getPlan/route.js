@@ -13,7 +13,7 @@ export async function GET(request) {
       );
 
     const result =
-      await sql`SELECT wp.id as workout_plan_id, wp.name as plan_name,
+      await sql`SELECT wp.id as workout_plan_id,  wp.user_id, wp.name as plan_name,
       unnested.t_id, 
       tutorial.name, 
       tutorial.img_url
@@ -27,7 +27,7 @@ LEFT JOIN LATERAL (
    SELECT id, name, img_url
    FROM tutorial 
    WHERE tutorial.id = unnested.t_id
-) AS tutorial ON true`;
+) AS tutorial ON true WHERE wp.user_id =${user_id}`;
 
     let groupedData = result.rows;
     if (result.rows.length) {
