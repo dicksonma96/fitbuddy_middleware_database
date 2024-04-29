@@ -154,8 +154,7 @@ content-type: application/json
 
 {
     "user_id":123,
-    "tutorials":[1,2,3],
-    "name":"My Plan"
+    "name":"My Plan 2"
 }
 
 ###
@@ -170,12 +169,18 @@ POST http://localhost:3000/api/updatePlan HTTP/1.1
 content-type: application/json
 
 {
-    "id":2,
-    "tutorials":[1,2],
+    "id":1,
+    "tutorials":[1,2,3],
     "name":"My Plan 2"
 }
 
 ###
+
+
+DELETE http://localhost:3000/api/deletePlan?id=1 HTTP/1.1
+content-type: application/json
+
+
 
 INSERT INTO exercise (tutorial_id, name, reps, description) 
 VALUES 
@@ -193,3 +198,13 @@ true,true)
 
 
 select user_complete.*, tutorial.name from user_complete LEFT JOIN tutorial ON user_complete.tutorial_id = tutorial.id where user_id = '123'
+
+
+
+
+CREATE TABLE workout_plan (
+id SERIAL PRIMARY KEY,
+name VARCHAR(100),
+user_id VARCHAR(255),
+tutorials INTEGER[]
+)
