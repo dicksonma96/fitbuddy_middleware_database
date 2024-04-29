@@ -12,7 +12,8 @@ export async function GET(request) {
         { status: 200 }
       );
 
-    const result = await sql`SELECT wp.id as workout_plan_id, 
+    const result =
+      await sql`SELECT wp.id as workout_plan_id, wp.name as plan_name,
       unnested.t_id, 
       tutorial.name, 
       tutorial.img_url
@@ -31,11 +32,12 @@ LEFT JOIN LATERAL (
     let groupedData = result.rows;
     if (result.rows.length) {
       groupedData = result.rows.reduce((acc, curr) => {
-        const { workout_plan_id, t_id, name, img_url } = curr;
+        const { workout_plan_id, t_id, name, img_url, plan_name } = curr;
 
         if (!acc[workout_plan_id]) {
           acc[workout_plan_id] = {
             workout_plan_id,
+            plan_name,
             tutorials: [],
           };
         }
