@@ -138,8 +138,41 @@ POST http://localhost:3000/api/markComplete HTTP/1.1
 content-type: application/json
 
 {
-    "user_id":1,
+    "user_id":123,
     "tutorial_id":2
+}
+
+###
+
+GET http://localhost:3000/api/completeStatus?user_id=123&tutorial_id=2 HTTP/1.1
+content-type: application/json
+
+###
+
+POST http://localhost:3000/api/createPlan HTTP/1.1
+content-type: application/json
+
+{
+    "user_id":123,
+    "tutorials":[1,2,3],
+    "name":"My Plan"
+}
+
+###
+
+GET http://localhost:3000/api/getPlan?user_id=123 HTTP/1.1
+content-type: application/json
+
+###
+
+
+POST http://localhost:3000/api/updatePlan HTTP/1.1
+content-type: application/json
+
+{
+    "id":2,
+    "tutorials":[1,2],
+    "name":"My Plan 2"
 }
 
 ###
